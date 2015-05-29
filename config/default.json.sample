@@ -1,0 +1,11 @@
+{
+  "server": {
+    "port": 3000,
+    "https": true,
+    "cert": "certs/cert.pem",
+    "key": "certs/key.pem"
+  },
+  "database": {
+    "url": "localhost/tbl"
+  }
+}
