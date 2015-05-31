@@ -1,6 +1,7 @@
-<div ng-if='authenticated' class='row'>
+<div class='row'>
   <div class='col-md-12'>
-    <a ui-sref='players.edit({playerId: player.link_name})' class='btn btn-default'>Edit Player</a>
+    <a ng-if='authenticated' ui-sref='players.edit({playerId: player.link_name})' class='btn btn-default'>Edit Player</a>
+    <a ui-sref='players.list' class='btn btn-default'>Back</a>
   </div>
 </div>
 <div class='row'>
