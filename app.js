@@ -4,6 +4,7 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var http = require('http');
 var https = require('https');
 var fs = require('fs');
 var cookieParser = require('cookie-parser');
@@ -83,20 +84,26 @@ app.use(function(err, req, res, next) {
   });
 });
 
-if (config.get('server.https')) { // HTTPS server
-  var httpsConfig = {
-    key: fs.readFileSync(config.get('server.key')),
-    cert: fs.readFileSync(config.get('server.cert'))
-  };
+if (!config.get('server.http') && !config.get('server.https')) {
+  console.log('No server specified, exiting');
+} else {
+  if (config.get('server.https')) {
+    var httpsConfig = {
+      key: fs.readFileSync(config.get('server.https.key')),
+      cert: fs.readFileSync(config.get('server.https.cert'))
+    };
 
-  var server = https.createServer(httpsConfig, app).listen(config.get('server.port'), function() {
-    var port = server.address().port;
-    console.log('HTTPS server listening on port %s', port);
-  });
-  
-} else {  // HTTP server
-  var server = app.listen(config.get('server.port'), function () {
-    var port = server.address().port;
-    console.log('HTTP server listening on port %s', port);
-  });
+    var httpsServer = https.createServer(httpsConfig, app).listen(config.get('server.https.port'), function() {
+      var port = server.address().port;
+      console.log('HTTPS server listening on port %s', port);
+    });
+  }
+
+  if (config.get('server.http')) {
+    var server = app.listen(config.get('server.http.port'), function () {
+      var port = server.address().port;
+      console.log('HTTP server listening on port %s', port);
+    });
+  }
 }
+

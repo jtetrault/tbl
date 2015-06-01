@@ -1,9 +1,13 @@
 {
   "server": {
-    "port": 3000,
-    "https": true,
-    "cert": "certs/cert.pem",
-    "key": "certs/key.pem"
+    "http": {
+      "port": 3080
+    },
+    "https": {
+      "port": 3000,
+      "cert": "certs/cert.pem",
+      "key": "certs/key.pem"
+    }
   },
   "database": {
     "url": "localhost/tbl"
