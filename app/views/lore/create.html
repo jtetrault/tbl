@@ -1,0 +1,40 @@
+<div ng-if='authenticated' class='row'>
+  <div class='col-md-12'>
+    <form enctype='multipart/form-data' novalidate>
+      <div class='form-group'>
+        <label for='lore.title'>Title</label>
+        <input id='lore.title' class='form-control' type='text' ng-model='lore.title'/>
+      </div>
+      <div class='form-group'>
+        <label for='lore.link_name'>Id</label>
+        <input id='lore.link_name' class='form-control' type='text' ng-model='lore.link_name'/>
+      </div>
+      <div class='form-group'>
+        <label for='lore.text'>Text</label>
+        <textarea id='lore.text' class='form-control' ng-model='lore.text' rows='10'></textarea>
+      </div>
+      <!--
+      <div class='form-group' ng-if='player._id'>
+        <label for='player.image'>Profile Picture</label>
+        <div class='row'>
+          <div class='col-md-4'>
+            <img id='player.image' ng-if='player.image' class='img-responsive img-thumbnail' ng-src='{{player.image}}'>
+          </div>
+        </div>
+        <div class='btn btn-primary btn-upload' upload-button 
+          url='/players/{{player.link_name}}/image'
+          param='image'
+          accept='image/*'
+          on-success='onImageUploadSuccess(response)'>
+          Upload New Profile Picture
+        </div>
+      </div>
+      -->
+      <button type='submit' class='btn btn-primary' ng-click='update(lore)'>Submit</button>
+      <button class='btn btn-default' ng-click='reset(lore)'>Reset</button> 
+      <a ng-if='lore._id' class='btn btn-default' ui-sref='lore.view({link_name: lore.link_name})'>Cancel</a>
+      <a ng-if='!lore._id' class='btn btn-default' ui-sref='lore.list'>Cancel</a>
+      <button class='btn btn-danger' ng-click='removeLore(lore)'>Delete</button>
+    </form>
+  </div>
+</div>

@@ -7,7 +7,9 @@ angular.module('tbl', [
   'tbl.home',
   'tbl.players',
   'tbl.admin',
-  'tbl.authService'
+  'tbl.authService',
+  'tbl.services.lore',
+  'tbl.controllers.lore'
 ]).
 config(['$stateProvider', '$urlRouterProvider', '$urlMatcherFactoryProvider',
   function($stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider) {

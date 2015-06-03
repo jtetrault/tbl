@@ -1,0 +1,19 @@
+<div ng-if='authenticated' class='row'>
+  <div class='col-md-12'>
+    <a ui-sref='lore.new' class='btn btn-success'>New Lore</a>
+  </div>
+</div>
+<div class='row'>
+  <div class='col-md-4 col-md-offset-3'>
+    <div class='input-group'>
+      <span class='input-group-addon' id='search-addon'>Search</span>
+      <input ng-model='search' type='text' class='form-control' aria-describedby='search-addon'>
+    </div>
+  </div>
+</div>
+<div class="row player" ng-repeat="lore in lores | filter:search | orderBy:'title'">
+  <div class='col-md-4 col-xs-6'>
+    <h2><a class='black-link' ui-sref="lore.view({link_name: lore.link_name})">{{lore.title}}</a></h2>
+  </div>
+</div>
+

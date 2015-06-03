@@ -7,5 +7,6 @@ mongoose.connect(config.get('database.url'));
 
 var playerModel = require(path.join('../models/player'));
 var userModel = require(path.join('../models/admin'));
+var loreModel = require(path.join('../models/lore'));
 
 module.exports = mongoose;

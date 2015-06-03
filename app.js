@@ -18,6 +18,7 @@ var passport = require('passport');
 var mongoose = require('./components/mongoose_init');
 require('./components/passport_init')
 var players = require('./routes/players');
+var lore = require('./routes/lore');
 
 var app = express();
 
@@ -52,6 +53,7 @@ app.get('/authenticated', function (req, res, next) {
 app.use('/', express.static('app'));
 
 app.use('/players', players);
+app.use('/lore', lore);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -94,7 +96,7 @@ if (!config.get('server.http') && !config.get('server.https')) {
     };
 
     var httpsServer = https.createServer(httpsConfig, app).listen(config.get('server.https.port'), function() {
-      var port = server.address().port;
+      var port = httpsServer.address().port;
       console.log('HTTPS server listening on port %s', port);
     });
   }

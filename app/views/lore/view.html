@@ -1,0 +1,16 @@
+<div class='row'>
+  <div class='col-md-12'>
+    <a ng-if='authenticated' ui-sref='lore.edit({link_name: lore.link_name})' class='btn btn-default'>Edit Lore</a>
+    <a ui-sref='lore.list' class='btn btn-default'>Back</a>
+  </div>
+</div>
+<div class='row'>
+  <div class='col-md-4 col-md-offset-1'>
+    <h1>{{lore.title}}</h1>
+    <img class='img-responsive img-rounded black-border' ng-if='lore.image' ng-src='{{lore.image}}'>
+  </div>
+  <div class='col-md-7'>
+    <h3>Details</h3>
+    <p>{{lore.text}}</p>
+  </div>
+</div>
