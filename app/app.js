@@ -4,6 +4,7 @@
 angular.module('tbl', [
   'ui.router',
   'lr.upload',
+  'btford.markdown',
   'tbl.home',
   'tbl.players',
   'tbl.admin',
