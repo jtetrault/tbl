@@ -7,7 +7,15 @@
 <div class='row'>
   <div class='col-md-4 col-md-offset-1'>
     <h1>{{lore.title}}</h1>
-    <img class='img-responsive img-rounded black-border' ng-if='lore.image' ng-src='{{lore.image}}'>
+    <img class='img-responsive img-rounded black-border' ng-if='mainImage' ng-src='{{mainImage.path}}'>
+      <p>Click to Expand</p>
+    <div class='row'>
+      <div ng-repeat='image in lore.images' class='col-md-4 col-xs-4'>
+        <a href='' ng-click='updateImage(image)'>
+          <img class='img-responsive img-thumbnail' ng-src='{{image.path}}'>
+        </a>
+      </div>
+    </div>
   </div>
   <div class='col-md-7'>
     <h3>Details</h3>

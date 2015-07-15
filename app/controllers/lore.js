@@ -40,7 +40,10 @@
   .controller('DetailLoreCtrl', ['Lore', '$scope', '$stateParams',
     function (Lore, $scope, $stateParams) {
       $scope.link_name = $stateParams.link_name;
-      $scope.lore = Lore.get({link_name: $scope.link_name}, function () {
+      $scope.lore = Lore.get({link_name: $stateParams.link_name}, function () {
+        if ($scope.lore.images) {
+          $scope.updateImage($scope.lore.images[0]);
+        }
       });
 
       $scope.updateImage = function (image) {
@@ -63,16 +66,16 @@
         });
       };
 
-      $scope.reset = function(player) {
+      $scope.reset = function(lore) {
         lore.title = undefined;
         lore.link_name = undefined;
         lore.text = undefined;
       };
-/*
+
       $scope.onImageUploadSuccess = function(response) {
-        $scope.player.image = response.data.image;
+        console.log(response);
+        $scope.lore.images = response.data.images;
       };
-*/
 
       $scope.removeLore = function (lore){
         var del = confirm('Are you sure you want to delete '+lore.title+'?');
@@ -82,5 +85,22 @@
           });
         }
       }
+
+      $scope.deleteImage = function(image) {
+        console.log(image);
+        $scope.lore.$deleteImage({imageId: image._id});
+      };
+
+      $scope.swapImage = function(oldIndex, newIndex) {
+        if ($scope.lore && $scope.lore.images) {
+          var images = $scope.lore.images
+          if (oldIndex >= 0 && oldIndex <  images.length &&
+              newIndex >= 0 && newIndex <= images.length) {
+            var temp = images[oldIndex];
+            images[oldIndex] = images[newIndex];
+            images[newIndex] = temp;
+          }
+        }
+      };
   }]);
 })();

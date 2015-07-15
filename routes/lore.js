@@ -53,37 +53,65 @@ router.post('/', function(req, res, next) {
     res.json(newLore);
   });
 });
-/*
-router.post('/:link_name/image', multer({
-  'dest': 'app/uploads/images/players/',
+
+router.post('/:link_name/images', multer({
+  'dest': './app/uploads/images/lore/',
   'rename': function(fieldname, filename, req, res) {
-    return req.params.link_name;
+    return 'temp'; 
   }
 }));
 
-router.post('/:link_name/image', function(req, res, next) {
-  Player.findOne({link_name: req.params.link_name}, function (err, player) {
+router.post('/:link_name/images', function(req, res, next) {
+  Lore.findOne({link_name: req.params.link_name}, function (err, lore) {
     if (err) {
       return next(err);
-    } else if (!player) {
-      return new Error('Player not found');
+    } else if (!lore) {
+      return new Error('Lore not found');
     }
     if (req.files && req.files.image) {
       var image = req.files.image;
-      if (player.image && player.imageFsPath(image.name) !== image.path) {
-        fs.unlinkSync(player.imageFsPath(image.name));
-      }
-      player.image = path.join('uploads', 'images', 'players', image.name);
-      player.save(function (err) {
-        if (err) {
-          return next(err);
+      var imageDoc = lore.images.create({extension: image.extension});
+      imageDoc.path = lore.imageWebPath(imageDoc);
+      fs.mkdir(lore.imageFsDir(), function (err){
+        if (err && err.code !== 'EEXIST') {
+          return (next(err));
         }
-        res.json({image: player.image});
+        fs.rename(image.path, lore.imageFsPath(imageDoc), function (err){
+          if (err) {
+            return next(err);
+          }
+          lore.images.push(imageDoc);
+          lore.save(function (err) {
+            if (err) {
+              return next(err);
+            }
+            res.json({images: lore.images});
+          });
+        });
       });
     }
   });
 });
-*/
+
+router.delete('/:link_name/images/:imageId', function (req, res, next) {
+  Lore.findOne({link_name: req.params.link_name}, function (err, lore) {
+    if (err) {
+      return next(err);
+    } else if (!lore) {
+      return new Error('Lore not found');
+    }
+    console.log('Delete image from lore %s', lore.title);
+    var image = lore.images.id(req.params.imageId);
+    fs.unlink(lore.imageFsPath(image));
+    image.remove();
+    lore.save(function (err) {
+      if (err) { 
+        return next(err)
+      }
+      res.json(lore);
+    });
+  });
+});
 
 router.post('/:link_name', function (req, res, next) {
   Lore.findOne({link_name: req.params.link_name}, function (err, lore) {
@@ -92,9 +120,10 @@ router.post('/:link_name', function (req, res, next) {
     } else if (!lore) {
       return next(new Error('Lore not found'));
     }
-    lore.title= req.body.title;
+    lore.title = req.body.title;
     lore.link_name = req.body.link_name;
     lore.text = req.body.text;
+    lore.images = req.body.images;
     lore.save(function(err){
       if (err) {
         return next(err);
@@ -113,6 +142,6 @@ router.delete('/:link_name', function (req, res, next) {
     }
     res.status(200).send();
   });
-})
+});
 
 module.exports = router;

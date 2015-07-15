@@ -9,3 +9,4 @@ bin/
 app/uploads/
 certs/
 config/*.json
+*.swp

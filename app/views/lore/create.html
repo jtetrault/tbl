@@ -13,23 +13,26 @@
         <label for='lore.text'>Text</label>
         <textarea id='lore.text' class='form-control' ng-model='lore.text' rows='10'></textarea>
       </div>
-      <!--
-      <div class='form-group' ng-if='player._id'>
-        <label for='player.image'>Profile Picture</label>
-        <div class='row'>
+      <div class='form-group' ng-if='lore._id'>
+        <label for='lore.image'>Images</label>
+        <div class='row' ng-repeat='image in lore.images'>
           <div class='col-md-4'>
-            <img id='player.image' ng-if='player.image' class='img-responsive img-thumbnail' ng-src='{{player.image}}'>
+            <img class='img-responsive img-thumbnail' ng-src='{{image.path}}'>
+          </div>
+          <div class='col-md-4'>
+            <button class='btn btn-danger' ng-click='deleteImage(image)'>Delete</button>
+          <button class='btn btn-default' ng-if='$index > 0' ng-click='swapImage($index, $index - 1)'>Swap Up</button>
+            <button class='btn btn-default' ng-click='swapImage($index, $index + 1)'>Swap Down</button>
           </div>
         </div>
         <div class='btn btn-primary btn-upload' upload-button 
-          url='/players/{{player.link_name}}/image'
+          url='/lore/{{lore.link_name}}/images'
           param='image'
           accept='image/*'
           on-success='onImageUploadSuccess(response)'>
-          Upload New Profile Picture
+          Upload New Image
         </div>
       </div>
-      -->
       <button type='submit' class='btn btn-primary' ng-click='update(lore)'>Submit</button>
       <button class='btn btn-default' ng-click='reset(lore)'>Reset</button> 
       <a ng-if='lore._id' class='btn btn-default' ui-sref='lore.view({link_name: lore.link_name})'>Cancel</a>

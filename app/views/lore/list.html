@@ -12,6 +12,11 @@
   </div>
 </div>
 <div class="row player" ng-repeat="lore in lores | filter:search | orderBy:'title'">
+  <div class='col-md-3 col-md-offset-3 col-xs-6'>
+    <a ui-sref="players.view({playerId: player.link_name})">
+      <img class='img-responsive img-thumbnail' ng-src='{{lore.first_image().path}}'>
+    </a>
+  </div>
   <div class='col-md-4 col-xs-6'>
     <h2><a class='black-link' ui-sref="lore.view({link_name: lore.link_name})">{{lore.title}}</a></h2>
   </div>
