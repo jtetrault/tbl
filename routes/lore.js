@@ -70,7 +70,10 @@ router.post('/:link_name/images', function(req, res, next) {
     }
     if (req.files && req.files.image) {
       var image = req.files.image;
-      var imageDoc = lore.images.create({extension: image.extension});
+      var imageDoc = lore.images.create({
+        extension: image.extension,
+        caption: req.body.caption
+      });
       imageDoc.path = lore.imageWebPath(imageDoc);
       fs.mkdir(lore.imageFsDir(), function (err){
         if (err && err.code !== 'EEXIST') {

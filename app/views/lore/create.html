@@ -20,8 +20,9 @@
             <img class='img-responsive img-thumbnail' ng-src='{{image.path}}'>
           </div>
           <div class='col-md-4'>
+            <label>Caption: </label><input ng-model='image.caption'/></br>
             <button class='btn btn-danger' ng-click='deleteImage(image)'>Delete</button>
-          <button class='btn btn-default' ng-if='$index > 0' ng-click='swapImage($index, $index - 1)'>Swap Up</button>
+            <button class='btn btn-default' ng-if='$index > 0' ng-click='swapImage($index, $index - 1)'>Swap Up</button>
             <button class='btn btn-default' ng-click='swapImage($index, $index + 1)'>Swap Down</button>
           </div>
         </div>
